@@ -1,8 +1,9 @@
-package com.jaycee.rda;
+package com.jaycee.rda.rules;
 
-public class PrimeRuleEngine implements RuleEngine<Instruction> {
+import com.jaycee.rda.domain.Instruction;
 
-    @Override
+public class PRIMERuleEngine implements RuleEngine<Instruction> {
+
     public Instruction applyRule(Instruction instruction, Instruction instructionExt) {
 
         if(instructionExt != null ){

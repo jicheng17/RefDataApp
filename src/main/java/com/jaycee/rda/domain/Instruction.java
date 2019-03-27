@@ -1,4 +1,4 @@
-package com.jaycee.rda;
+package com.jaycee.rda.domain;
 
 import com.jaycee.rda.util.Util;
 

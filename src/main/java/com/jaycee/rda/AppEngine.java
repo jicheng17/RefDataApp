@@ -1,29 +1,39 @@
 package com.jaycee.rda;
 
+import com.jaycee.rda.domain.InstructType;
+import com.jaycee.rda.domain.Instruction;
+import com.jaycee.rda.processor.ProcessorFactory;
+import com.jaycee.rda.processor.RDProcessor;
 import com.jaycee.rda.util.Util;
 
 import java.io.*;
-import java.util.Scanner;
 
+/**
+ * Engine class to run the program
+ */
 public class AppEngine {
     public static void main(String[] arg) {
-        RDProcessor processor = new RDProcessor();
-
         System.out.println("=========== Start RD processor ========== ");
-        String str = "";
+        String input = "";
 
         InputStream is = null;
         try {
             is = AppEngine.class.getResourceAsStream("/INSTRUCTION.dat");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            reader.readLine();
+            String header = reader.readLine();
             if (is != null) {
-                while ((str = reader.readLine()) != null) {
-                    String[] strs = str.split("\\|");
+                while ((input = reader.readLine()) != null) {
+
+                    String[] strs = input.split("\\|");
                     Instruction instruction = new Instruction(strs[1].trim(), strs[2].trim(), Util.toDate(strs[3].trim()), Util.toDate(strs[4].trim()), strs[5].trim(),
                             strs[6].trim(), strs[7].trim(), strs[8].trim());
 
+                    System.out.println(instruction.getSource() + " publishes below instruction: ");
+                    System.out.println(header);
+                    System.out.println(input);
+
+                    RDProcessor processor = ProcessorFactory.getProcessor(InstructType.valueOf(instruction.getSource()));
                     processor.process(instruction);
                 }
             }
